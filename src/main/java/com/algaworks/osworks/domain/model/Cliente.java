@@ -3,6 +3,7 @@ package com.algaworks.osworks.domain.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 //Pra criar a tabela no momento de fazer o run da aplicacão é necessario ter esta anotacão @Entity
 //Do contrário a tabela não será criada.
@@ -59,5 +60,18 @@ public class Cliente {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cliente cliente = (Cliente) o;
+        return Id == cliente.Id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(Id);
     }
 }
