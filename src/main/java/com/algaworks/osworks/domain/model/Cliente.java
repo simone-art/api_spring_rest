@@ -62,6 +62,7 @@ public class Cliente {
         this.telefone = telefone;
     }
 
+    //Gerados equals  e hasCode para poder comparar objetos a partir do ID
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
