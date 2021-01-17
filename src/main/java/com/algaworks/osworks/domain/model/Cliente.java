@@ -1,20 +1,39 @@
 package com.algaworks.osworks.domain.model;
 
-public class Cliente {
+import org.hibernate.annotations.GenericGenerator;
 
-    private Long Id;
+import javax.persistence.*;
+
+//Pra criar a tabela no momento de fazer o run da aplicacão é necessario ter esta anotacão @Entity
+//Do contrário a tabela não será criada.
+@Entity
+public class Cliente {
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator="native")
+    @GenericGenerator(name="native", strategy = "native")
+    private long Id;
+
+    @Column
     private String nome;
+
+    @Column
     private String email;
+
+    @Column
     private String telefone;
 
 
 
+
     //Getters and Setters permitem os accesos aos entities
-    public Long getId() {
+
+    public long getId() {
         return Id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         Id = id;
     }
 
