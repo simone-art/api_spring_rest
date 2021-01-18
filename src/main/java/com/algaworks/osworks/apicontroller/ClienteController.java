@@ -2,6 +2,8 @@ package com.algaworks.osworks.apicontroller;
 
 
 import com.algaworks.osworks.domain.model.Cliente;
+import com.algaworks.osworks.domain.repository.ClienteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,11 +32,13 @@ public class ClienteController {
     @PersistenceContext
     private EntityManager manager;
 
+    @Autowired
+    private ClienteRepository clienteRepository;
+
     @GetMapping("/clientes")
     public List<Cliente> listar(){
-    return manager.createQuery("from Cliente", Cliente.class)
-            .getResultList();
-
-
+//    return clienteRepository.findAll();
+//        return clienteRepository.findByNome("Simone Santos");
+        return clienteRepository.findByNomeContaining("Si");
     }
 }

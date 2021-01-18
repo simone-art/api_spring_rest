@@ -14,7 +14,7 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator="native")
     @GenericGenerator(name="native", strategy = "native")
-    private long Id;
+    private Long Id;
 
     @Column
     private String nome;
@@ -30,11 +30,11 @@ public class Cliente {
 
     //Getters and Setters permitem os accesos aos entities
 
-    public long getId() {
+    public Long getId() {
         return Id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         Id = id;
     }
 
