@@ -63,4 +63,16 @@ public class ClienteController {
        return clienteRepository.save(cliente);
     }
 
+    @PutMapping("/{clienteId}")
+    public ResponseEntity<Cliente> atualizar(@PathVariable Long clienteId, @RequestBody Cliente cliente)
+    {
+     if(!clienteRepository.existsById(clienteId)){
+         return ResponseEntity.notFound().build();
+     }
+          //Se você não colocar o setId, o código vai entender que você está criando
+          // um novo cliente, e na verdade você está atualizando.
+          cliente.setId(clienteId);
+          cliente = clienteRepository.save(cliente);
+          return  ResponseEntity.ok(cliente);
+    }
 }
