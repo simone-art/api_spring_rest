@@ -5,10 +5,7 @@ import com.algaworks.osworks.domain.model.Cliente;
 import com.algaworks.osworks.domain.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,7 +17,7 @@ import java.util.Optional;
 @RestController
 //@RequestMapping é uma anotação que responde a tudo que estiver no /clientes
 // é aí no GetMapping não precisa colocar o path.
-
+@RequestMapping("/clientes")
 
 //Clase responsável por receber as requisicões externas HTPP e responder
 public class ClienteController {
@@ -57,6 +54,10 @@ public class ClienteController {
         }
         return ResponseEntity.notFound().build();
 
+    }
+    @PostMapping
+    public Cliente adicionar(@RequestBody Cliente cliente){
+       return clienteRepository.save(cliente);
     }
 
 }
