@@ -1,5 +1,8 @@
 package com.algaworks.osworks.api.exceptionhandler;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +23,11 @@ import java.util.ArrayList;
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
+    //MessageSource é uma interfase do Spring usada pra resolver messages.propertis
+    //MessageSource precisa da @Autowired pra atribur uma instancia na variável messageSource
+    @Autowired
+    private MessageSource messageSource;
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid
             (MethodArgumentNotValidException ex, HttpHeaders headers,
@@ -29,7 +37,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         for(ObjectError error:ex.getBindingResult().getAllErrors()) {
             //String nome = error.getObjectName();
             String nome = ((FieldError)error).getField();
-            String mensagemCampo = error.getDefaultMessage();
+//            String mensagemCampo = error.getDefaultMessage();
+            //LocalContextHolder pega a lingua e o idioma local.
+            String mensagemCampo = messageSource.getMessage(error, LocaleContextHolder.getLocale());
             campos.add(new RespostaProblema.Campo(nome, mensagemCampo));
         }
 
