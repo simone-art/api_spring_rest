@@ -39,15 +39,15 @@ public class ClienteController {
     private ClienteRepository clienteRepository;
 
     @GetMapping
-    public List<Cliente> listar(){
-    return clienteRepository.findAll();
+    public List<Cliente> listar() {
+        return clienteRepository.findAll();
 //        return clienteRepository.findByNome("Simone Santos");
 //        return clienteRepository.findByNomeContaining("a");
     }
 
     @GetMapping("/{clienteId}")
-    public ResponseEntity<Cliente> buscar(@PathVariable Long clienteId){
-        Optional<Cliente> cliente =  clienteRepository.findById(clienteId);
+    public ResponseEntity<Cliente> buscar(@PathVariable Long clienteId) {
+        Optional<Cliente> cliente = clienteRepository.findById(clienteId);
         if (cliente.isPresent()) {
             //ResponseEntity retorna a resposta
             //O cliente é o optional o get e pra você buscar o que está dentro do optional
@@ -56,23 +56,35 @@ public class ClienteController {
         return ResponseEntity.notFound().build();
 
     }
+
     @PostMapping
     //@ReponseStatus(HttpStatus.CREATED) indica que o recurso está sendo criado
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente adicionar(@RequestBody Cliente cliente){
-       return clienteRepository.save(cliente);
+    public Cliente adicionar(@RequestBody Cliente cliente) {
+        return clienteRepository.save(cliente);
     }
 
     @PutMapping("/{clienteId}")
-    public ResponseEntity<Cliente> atualizar(@PathVariable Long clienteId, @RequestBody Cliente cliente)
-    {
-     if(!clienteRepository.existsById(clienteId)){
-         return ResponseEntity.notFound().build();
-     }
-          //Se você não colocar o setId, o código vai entender que você está criando
-          // um novo cliente, e na verdade você está atualizando.
-          cliente.setId(clienteId);
-          cliente = clienteRepository.save(cliente);
-          return  ResponseEntity.ok(cliente);
+    public ResponseEntity<Cliente> atualizar(@PathVariable Long clienteId, @RequestBody Cliente cliente) {
+        if (!clienteRepository.existsById(clienteId)) {
+            return ResponseEntity.notFound().build();
+        }
+        //Se você não colocar o setId, o código vai entender que você está criando
+        // um novo cliente, e na verdade você está atualizando.
+        cliente.setId(clienteId);
+        cliente = clienteRepository.save(cliente);
+        return ResponseEntity.ok(cliente);
     }
+
+    @DeleteMapping("/{clienteId}")
+
+    public ResponseEntity<Void> deletar(@PathVariable Long clienteId) {
+        if (!clienteRepository.existsById(clienteId)) {
+            return ResponseEntity.notFound().build();
+        }
+        clienteRepository.deleteById(clienteId);
+        //NoContent é o status 204 e não retorna nada no corpo da requisição
+        return ResponseEntity.noContent().build();
+    }
+
 }
