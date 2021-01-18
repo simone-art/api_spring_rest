@@ -4,6 +4,7 @@ package com.algaworks.osworks.apicontroller;
 import com.algaworks.osworks.domain.model.Cliente;
 import com.algaworks.osworks.domain.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,6 +57,8 @@ public class ClienteController {
 
     }
     @PostMapping
+    //@ReponseStatus(HttpStatus.CREATED) indica que o recurso está sendo criado
+    @ResponseStatus(HttpStatus.CREATED)
     public Cliente adicionar(@RequestBody Cliente cliente){
        return clienteRepository.save(cliente);
     }
