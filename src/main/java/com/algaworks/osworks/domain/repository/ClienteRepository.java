@@ -11,6 +11,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
     List<Cliente> findByNome(String nome);
     List<Cliente> findByNomeContaining(String nome);
+    //Não deve ser uma lista porque você está querendo comparar um só email, que deve ser único
     Cliente findByEmail(String email);
 
 }
