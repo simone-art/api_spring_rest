@@ -3,6 +3,7 @@ package com.algaworks.osworks.apicontroller;
 
 import com.algaworks.osworks.domain.model.Cliente;
 import com.algaworks.osworks.domain.repository.ClienteRepository;
+import com.algaworks.osworks.domain.service.CadastroClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +40,9 @@ public class ClienteController {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    @Autowired
+    private CadastroClienteService cadastroCliente;
+
     @GetMapping
     public List<Cliente> listar() {
         return clienteRepository.findAll();
@@ -62,7 +66,7 @@ public class ClienteController {
     //@ReponseStatus(HttpStatus.CREATED) indica que o recurso está sendo criado
     @ResponseStatus(HttpStatus.CREATED)
     public Cliente adicionar(@Valid @RequestBody Cliente cliente) {
-        return clienteRepository.save(cliente);
+        return cadastroCliente.salvar(cliente);
     }
 
     @PutMapping("/{clienteId}")
@@ -73,7 +77,7 @@ public class ClienteController {
         //Se você não colocar o setId, o código vai entender que você está criando
         // um novo cliente, e na verdade você está atualizando.
         cliente.setId(clienteId);
-        cliente = clienteRepository.save(cliente);
+        cliente = cadastroCliente.salvar(cliente);
         return ResponseEntity.ok(cliente);
     }
 
@@ -83,7 +87,7 @@ public class ClienteController {
         if (!clienteRepository.existsById(clienteId)) {
             return ResponseEntity.notFound().build();
         }
-        clienteRepository.deleteById(clienteId);
+        cadastroCliente.deletar(clienteId);
         //NoContent é o status 204 e não retorna nada no corpo da requisição
         return ResponseEntity.noContent().build();
     }
