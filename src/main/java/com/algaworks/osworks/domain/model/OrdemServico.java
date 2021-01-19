@@ -1,7 +1,7 @@
 package com.algaworks.osworks.domain.model;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.ManyToAny;
+
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -19,6 +19,7 @@ public class OrdemServico {
     //@ManyToOne mapeia as várias ordems que um cliente pode fazer {clienteId}
     @ManyToOne
     private Cliente cliente;
+
     private String descricao;
     private BigDecimal preco;
 

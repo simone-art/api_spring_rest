@@ -17,6 +17,6 @@ public class GestaoOrdemServicoService {
     public OrdemServico criar (OrdemServico ordemServico){
         ordemServico.setStatus(StatusOrdemServico.ABERTA);
         ordemServico.setDataAbertura(LocalDateTime.now());
-     return ordemServicoRepository.save(ordemServico);
+         return ordemServicoRepository.save(ordemServico);
     }
 }
